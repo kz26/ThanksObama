@@ -40,7 +40,7 @@ MainCtrl = ($scope, questions) ->
 		$scope.currentQuestion.correct = ($scope.choice == $scope.currentQuestion.answer)
 		if $scope.currentQuestion.correct
 			$scope.numCorrect++
-			$scope.percentCorrect = 100 * $scope.numCorrect / $scope.numQuestions
+		$scope.percentCorrect = Math.round(100 * $scope.numCorrect / $scope.currentQuestionNum)
 
 
 	$scope.getProgressBarStyle = ->

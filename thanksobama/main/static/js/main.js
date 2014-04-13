@@ -49,8 +49,8 @@ MainCtrl = function($scope, questions) {
     $scope.currentQuestion.correct = $scope.choice === $scope.currentQuestion.answer;
     if ($scope.currentQuestion.correct) {
       $scope.numCorrect++;
-      return $scope.percentCorrect = 100 * $scope.numCorrect / $scope.numQuestions;
     }
+    return $scope.percentCorrect = Math.round(100 * $scope.numCorrect / $scope.currentQuestionNum);
   };
   $scope.getProgressBarStyle = function() {
     var color;
