@@ -2,6 +2,8 @@ import socket
 import struct
 import json
 from time import sleep
+from lxml import html
+import requests
 
 class IMOInterface(object):
 	def __init__(self):
@@ -20,7 +22,20 @@ class IMOInterface(object):
 			data['data']['items'] = data['data']['items'][1:]
 		if len(data['data']['items']):
 			x = data['data']['items'][0]
-			return x['title']
+			return (x['code'], x['title'])
 		else:
 			return None
+
+	def get_lexical_definition(self, imo_id):
+		text = requests.get("https://www1.e-imo.com/knowledge/ProblemITDetails.asp?LEXICALCODE=%s" % (imo_id)).text
+		tree = html.fromstring(text)
+		table = tree.find('.//table')
+		rows = table.findall(".//tr")
+		lexdef = rows[4].findall('.//td')[1].text.strip()
+		if lexdef.lower() != 'none':
+			return lexdef
+		else:
+			return None
+
+
 

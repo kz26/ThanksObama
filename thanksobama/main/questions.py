@@ -14,7 +14,13 @@ def gen_icd10_procedures_question():
 		icd10 = LCDInterface.random_icd10()
 		if not icd10_re.match(icd10):
 			icd10 = None
-	imo_term = IMO.get_imo_from_query(icd10)
+	imo_id, imo_term = IMO.get_imo_from_query(icd10)
+	try: # attempt to use lexical definition if it exists
+		diag = IMO.get_lexical_definition(imo_id)
+		if diag is None:
+			diag = imo_term
+	except:
+		diag = imo_term
 	sp = [x[0] for x in LCDInterface.get_icd10_procedures(icd10)]
 	choices = [random.choice(sp)]
 	bp = LCDInterface.get_icd10_unsupported_procedures(icd10)
@@ -31,7 +37,7 @@ def gen_icd10_procedures_question():
 	answer = choices[0]
 	random.shuffle(choices)
 	return {
-		'question': "A patient is diagnosed with <b>%s</b>. An appropriate procedure that might be ordered is" % (imo_term),
+		'question': "A patient is diagnosed with <b>%s</b>. An appropriate procedure that might be ordered is" % (diag),
 		'answer': choices.index(answer),
 		'choices': choices
 	}
@@ -56,7 +62,7 @@ def gen_procedures_icd10_question():
 			icd10 = LCDInterface.random_icd10()
 			if icd10 not in icd10s_set and icd10_re.match(icd10):
 				choices.append(icd10)
-	choices = [bleach.clean(IMO.get_imo_from_query(x), tags=[], attributes=[], strip=True).strip(" '\"") for x in choices]
+	choices = [bleach.clean(IMO.get_imo_from_query(x)[1], tags=[], attributes=[], strip=True).strip(" '\"") for x in choices]
 	answer = choices[0]
 	random.shuffle(choices)
 	return {
