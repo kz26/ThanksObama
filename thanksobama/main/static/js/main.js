@@ -20,10 +20,14 @@ app.factory('questions', function($http) {
 });
 
 MainCtrl = function($scope, questions) {
-  $scope.numQuestions = 10;
-  $scope.currentQuestionNum = 0;
-  $scope.numCorrect = 0;
-  $scope.percentCorrect = 0;
+  $scope.reset = function() {
+    $scope.numQuestions = 10;
+    $scope.currentQuestionNum = 0;
+    $scope.numCorrect = 0;
+    $scope.percentCorrect = 0;
+    $scope.gameOver = false;
+    return $scope.getNextQuestion();
+  };
   $scope.getNextQuestion = function() {
     if ($scope.currentQuestionNum === $scope.numQuestions) {
       $scope.gameOver = true;
@@ -37,7 +41,6 @@ MainCtrl = function($scope, questions) {
       return $scope.busy = false;
     });
   };
-  $scope.getNextQuestion();
   $scope.setChoice = function(i) {
     return $scope.choice = i;
   };
@@ -64,7 +67,7 @@ MainCtrl = function($scope, questions) {
       'background-color': color
     };
   };
-  return $scope.calculateGrade = function() {
+  $scope.calculateGrade = function() {
     var pc;
     pc = $scope.percentCorrect;
     if (pc < 60) {
@@ -84,4 +87,5 @@ MainCtrl = function($scope, questions) {
       return $scope.doctorLevel = "Dr. House";
     }
   };
+  return $scope.reset();
 };

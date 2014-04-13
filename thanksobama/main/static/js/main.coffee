@@ -13,10 +13,13 @@ app.factory 'questions', ($http) ->
 	}
 
 MainCtrl = ($scope, questions) ->
-	$scope.numQuestions = 10 
-	$scope.currentQuestionNum = 0
-	$scope.numCorrect = 0
-	$scope.percentCorrect = 0
+	$scope.reset = ->
+		$scope.numQuestions = 10
+		$scope.currentQuestionNum = 0
+		$scope.numCorrect = 0
+		$scope.percentCorrect = 0
+		$scope.gameOver = false
+		$scope.getNextQuestion() # get the first question
 
 	$scope.getNextQuestion = ->
 		if $scope.currentQuestionNum == $scope.numQuestions
@@ -28,7 +31,6 @@ MainCtrl = ($scope, questions) ->
 			$scope.currentQuestion = data
 			$scope.currentQuestionNum++
 			$scope.busy = false
-	$scope.getNextQuestion() # get the first question
 
 	$scope.setChoice = (i) ->
 		$scope.choice = i 
@@ -68,4 +70,5 @@ MainCtrl = ($scope, questions) ->
 		else
 			$scope.letterGrade = "A"
 			$scope.doctorLevel = "Dr. House"
-		 
+		
+	$scope.reset()
