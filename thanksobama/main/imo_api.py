@@ -1,8 +1,6 @@
 import socket
 import struct
 import json
-from lxml import html
-import requests
 from time import sleep
 
 class IMOInterface(object):
