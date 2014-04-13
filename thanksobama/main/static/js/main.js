@@ -20,7 +20,7 @@ app.factory('questions', function($http) {
 });
 
 MainCtrl = function($scope, questions) {
-  $scope.numQuestions = 2;
+  $scope.numQuestions = 10;
   $scope.currentQuestionNum = 0;
   $scope.numCorrect = 0;
   $scope.percentCorrect = 0;
