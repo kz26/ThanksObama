@@ -1,8 +1,10 @@
+import os
 import sqlite3
 
 class LCDInterface(object):
 	def __init__(self):
-		self.conn = sqlite3.connect('lcd.sqlite')
+		
+		self.conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), 'lcd.sqlite'), check_same_thread=False)
 		self.conn.text_factory = lambda x: unicode(x, 'utf-8', 'ignore') # fix unicode issues
 
 	def random_icd10(self):
@@ -13,7 +15,7 @@ class LCDInterface(object):
 	def random_procedure(self):
 		# return a random procedure from the LCD table
 		qr = self.conn.execute("SELECT DISTINCT title FROM lcd ORDER BY RANDOM() LIMIT 1")
-		return qr.fetchone()
+		return qr.fetchone()[0]
 
 	def random_supported_procedure(self):
 		# return a random supported procedure that appears IN the icd10_support table
