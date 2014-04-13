@@ -31,7 +31,7 @@ def gen_icd10_procedures_question():
 	answer = choices[0]
 	random.shuffle(choices)
 	return {
-		'question': "A patient is diagnosed with <b>%s</b>. A medically necessary procedure that might be ordered is" % (imo_term),
+		'question': "A patient is diagnosed with <b>%s</b>. An appropriate procedure that might be ordered is" % (imo_term),
 		'answer': choices.index(answer),
 		'choices': choices
 	}
