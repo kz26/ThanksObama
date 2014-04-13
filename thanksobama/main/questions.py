@@ -62,7 +62,6 @@ def gen_procedures_icd10_question():
 	return {
 		'question': "<b>%s</b> is appropriate for which one of the following conditions?" % (p_name),
 		'answer': choices.index(answer),
-		'answer_icd10': answer_icd10, 
 		'choices': choices
 	}
 	

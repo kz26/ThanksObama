@@ -45,7 +45,7 @@
 			</div>
 			<div ng-show="!busy && currentQuestion && !gameOver">
 				<p class="lead" ng-bind-html="currentQuestion.question"></p>
-				<div ng-repeat="choice in currentQuestion.choices track by $index">
+				<div ng-repeat="choice in currentQuestion.choices track by $index" style="font-size: 21px;">
 					<span class="glyphicon glyphicon-ok text-success" ng-show="currentQuestion.graded && $index == currentQuestion.answer"></span>
 					<span class="glyphicon glyphicon-remove text-danger" ng-show="currentQuestion.graded && !currentQuestion.correct && $index != currentQuestion.answer"></span>
 					<input type="radio" name="choices-{{ currentQuestionNum }}" ng-click="setChoice($index)" ng-disabled="currentQuestion.graded"> <span ng-bind-html="choice"></span>
